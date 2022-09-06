@@ -1,0 +1,4 @@
+---
+- hosts: all
+  tasks: 
+    - shel: 'echo hello > /vagrant/world.txt'
