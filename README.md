@@ -29,7 +29,7 @@ Playbook tem a extensão .yml, sua função é passar uma série de comandos par
 *tasks: listas de comandos serão executados nos hosts indicados
 *- shell: 'echo hello > world.txt'* = comando usando shell
 
-#Comando para usar o playbook
+# Comando para usar o playbook <h10>
 ```
 ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/machines/wordpress/virtualbox/private_key
 ```
