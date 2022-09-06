@@ -74,6 +74,39 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 # Importante <h1>
 ```
 O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser executado várias vezes, mas não vai alterar nada se tudo estiver igual após a primeira execução.
+```  
+
+# Simplificando o Playbook com with_items <h10>  
 ```
+ tasks:
+    - name: "Instala pacotes de dependencias do SO"
+      apt:
+        name: "{{ item }}"
+        state: latest
+      become: yes
+      with_items:
+        - php7.4
+        - apache2
+        - libapache2-mod-php7.4
+        - php7.4-gd
+        - libssh-4
+        - mysql-server-8.0
+        - php7.4-mysql
+```
+**Explicação**  
+*- name: "Instala pacotes de dependencias do SO"*= nome da tarefa que será executada  
+*apt:*= instala pacotes apt  
+*name: "{{ item }}"*= nome do pacote que irá instar usa o comando "{{ item }}" para guardar a lista de itens que serão utilizadas.  
+*state: latest* = estado final (última versão)  
+*become: yes* = executa como root  
+*with_items:* - como que chama a lista de itens  
+*- php7.4  
+- apache2  
+- libapache2-mod-php7.4  
+- php7.4-gd  
+- libssh-4  
+- mysql-server-8.0  
+- php7.4-mysql*  = lista de itens a serem instalados  
+
 
 Fim

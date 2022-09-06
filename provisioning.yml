@@ -1,21 +1,37 @@
 ---
 - hosts: all
-  tasks: 
-    - name: 'Instala o PHP7.4'
+  tasks:
+    - name: "Instala pacotes de dependencias do SO"
       apt:
-        name: php7.4
+        name: "{{ item }}"
         state: latest
       become: yes
+      with_items:
+        - php7.4
+        - apache2
+        - libapache2-mod-php7.4
+        - php7.4-gd
+        - libssh-4
+        - mysql-server-8.0
+        - php7.4-mysql
+  
+  
+  # tasks: 
+  #   - name: 'Instala o PHP7.4'
+  #     apt:
+  #       name: php7.4
+  #       state: latest
+  #     become: yes
 
-    - name: 'Instala Apache2'
-      apt:
-        name: apache2
-        state: latest
-      become: yes
+  #   - name: 'Instala Apache2'
+  #     apt:
+  #       name: apache2
+  #       state: latest
+  #     become: yes
     
-    - name: 'Instala o modphp'
-      apt:
-        name: libapache2-mod-php7.4
-        state: latest
-      become: yes
+  #   - name: 'Instala o modphp'
+  #     apt:
+  #       name: libapache2-mod-php7.4
+  #       state: latest
+  #     become: yes
      
