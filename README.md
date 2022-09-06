@@ -41,5 +41,38 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 *-i hosts* =  indica o arquivo hosts que será usado  
 *--private-key .vagrant/machines/wordpress/virtualbox/private_key* = arquivo de chave primária já criado pelo vagrant  
 
+# Instalando dependências <h10>
+```
+- hosts: all
+  tasks: 
+    - name: 'Instala o PHP7.4'
+      apt:
+        name: php7.4
+        state: latest
+      become: yes
+
+    - name: 'Instala Apache2'
+      apt:
+        name: apache2
+        state: latest
+      become: yes
+    
+    - name: 'Instala o modphp'
+      apt:
+        name: libapache2-mod-php7.4
+        state: latest
+      become: yes
+```
+**Explicação**
+*- name: 'Instala PHP7.4'*= Descreve o que a task irá realizar  
+*apt:*= administra pacotes do debian e suas derivações  
+*name: php7.4*= nome do pacote que desejamos instalar  
+*state: latest*= estado desejado da execução de uma *task* nesse caso, a última versão  
+*become: yes*= indica que o comando será rodado como root  
+
+# Importante <h1>
+```
+O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser executado várias vezes, mas não vai alterar nada se tudo estiver igual.
+```
 
 Fim
