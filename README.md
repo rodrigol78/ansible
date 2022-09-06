@@ -35,7 +35,7 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 ```
 
 **Explicação**
-*ansible-playbook*= comando para rodar o playbook
+*ansible-playbook*= comando para rodar o playbook  
 *provisioning.yml*= nome do arquivo .yml que contem os comandos a serem executados
 *-u vagrant* = usuário do vagrant  
 *-i hosts* =  indica o arquivo hosts que será usado  
