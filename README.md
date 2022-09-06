@@ -13,3 +13,4 @@ ansible -vvv wordpress -u vagrant --private-key .vagrant/machines/wordpress/virt
 *-m shell* = indica o módulo do ansible a ser usado (nesse caso o shell)  
 *-a 'echo Hello, World'* = argumento que foi passado pro sheel (nesse caso o comando echo 'Hello, World'  
 
+Fim
