@@ -16,7 +16,7 @@ ansible -vvv wordpress -u vagrant --private-key .vagrant/machines/wordpress/virt
 # Criando o primeiro Playbook <h10>
 Playbook tem a extensão .yml, sua função é passar uma série de comandos para o ansible.  
 **Ex:**  
->---
+>  '---'
 >- hosts: all
 >  tasks: 
 >    - shel: 'echo hello > /vagrant/world.txt'
