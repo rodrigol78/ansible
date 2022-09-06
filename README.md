@@ -34,7 +34,7 @@ Playbook tem a extensão .yml, sua função é passar uma série de comandos par
 ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/machines/wordpress/virtualbox/private_key
 ```
 
-** Explicação**
+**Explicação**
 *ansible-playbook*= comando para rodar o playbook
 *provisioning.yml*= nome do arquivo .yml que contem os comandos a serem executados
 *-u vagrant* = usuário do vagrant  
