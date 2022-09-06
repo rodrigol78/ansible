@@ -63,7 +63,8 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
         state: latest
       become: yes
 ```
-**Explicação**
+**Explicação**  
+
 *- name: 'Instala PHP7.4'*= Descreve o que a task irá realizar  
 *apt:*= administra pacotes do debian e suas derivações  
 *name: php7.4*= nome do pacote que desejamos instalar  
@@ -72,7 +73,7 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 
 # Importante <h1>
 ```
-O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser executado várias vezes, mas não vai alterar nada se tudo estiver igual.
+O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser executado várias vezes, mas não vai alterar nada se tudo estiver igual após a primeira execução.
 ```
 
 Fim
