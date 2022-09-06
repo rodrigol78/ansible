@@ -100,13 +100,13 @@ O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser exec
 *state: latest* = estado final (última versão)  
 *become: yes* = executa como root  
 *with_items:* - como que chama a lista de itens  
-*- php7.4  
-- apache2  
-- libapache2-mod-php7.4  
-- php7.4-gd  
-- libssh-4  
-- mysql-server-8.0  
-- php7.4-mysql*  = lista de itens a serem instalados  
+*- php7.4*  
+*- apache2*  
+*- libapache2-mod-php7.4*  
+*- php7.4-gd*  
+*- libssh-4*  
+*- mysql-server-8.0*  
+*- php7.4-mysql*  = lista de itens a serem instalados  
 
 
 Fim
