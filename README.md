@@ -2,7 +2,7 @@ Comando inicial
 ```
 ansible -vvv wordpress -u vagrant --private-key .vagrant/machines/wordpress/virtualbox/private_key -i hosts -m shell -a 'echo Hello, World'
 ```
-Explicação:
+Explicação:  
 ansible -vvv = roda o ansible no modo verbose
 wordpress = grupo criado no arquivo hosts
 -u vagrant = usuário do vagrant
