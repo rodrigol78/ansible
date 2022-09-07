@@ -218,7 +218,7 @@ No módulo **mysql_db** podemos ter os seguintes state:
 *become: yes*= o Mysql8 não aceita o usuário root, por isso o módulo precisa ser executado como sudo. 
  
 # Importante
-o módulo **mysql_user** podemos ter os seguintes state:
+No módulo **mysql_user** podemos ter os seguintes state:
 - present-> cria o usuário
 - absent -> apaga o usuário
 
