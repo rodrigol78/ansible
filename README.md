@@ -72,7 +72,7 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 *become: yes*= indica que o comando será rodado como root  
 
 # Importante <h1>
-No módulo mysql_db podemos ter os seguintes state:
+No módulo **apt** podemos ter os seguintes state:
 - absent -> desinstalar um pacote
 - build-dep -> instalar o pacote com as dependências dele
 - latest -> o pacote mais atual
@@ -141,7 +141,7 @@ Assim o comando do ansible ficaria reduzido a:
 ansible-playbook provisioning.yml -i hosts
 ``` 
 # Importante <h1>
-No módulo mysql_db podemos ter os seguintes state:
+No módulo **mysql_db** podemos ter os seguintes state:
 - absent -> destruir
 - dump -> fazer cópia
 - import -> importar através de um script
