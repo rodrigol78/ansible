@@ -190,7 +190,7 @@ O segundo instala o dentro do Python3 o pacote PyMySQL
 *state: present*= estado que cria o bando. Ver abaixo a lista de estados  
 *become: yes*= o Mysql8 não aceita o usuário root, por isso o módulo precisa ser executado como sudo.  
 
-# Importante#  
+# Importante  
 
 No módulo **mysql_db** podemos ter os seguintes state:
 - absent -> destruir
