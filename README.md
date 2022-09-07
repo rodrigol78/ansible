@@ -72,6 +72,11 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 *become: yes*= indica que o comando será rodado como root  
 
 # Importante <h1>
+No módulo mysql_db podemos ter os seguintes state:
+- absent -> desinstalar um pacote
+- build-dep -> instalar o pacote com as dependências dele
+- latest -> o pacote mais atual
+- present ← (default) -> criar 
 ```
 O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser executado várias vezes, mas não vai alterar nada se tudo estiver igual após a primeira execução.
 ```  
@@ -134,5 +139,11 @@ Também existe esta maneira abaixo de ser instalar vários pacotes:
 Assim o comando do ansible ficaria reduzido a:
 ```
 ansible-playbook provisioning.yml -i hosts
-```
+``` 
+# Importante <h1>
+No módulo mysql_db podemos ter os seguintes state:
+- absent -> destruir
+- dump -> fazer cópia
+- import -> importar através de um script
+- present ← (default) -> criar
 Fim
