@@ -195,7 +195,7 @@ No módulo **mysql_db** podemos ter os seguintes state:
 - absent -> destruir
 - dump -> fazer cópia
 - import -> importar através de um script
-- present ← (default) -> criar  
+- present -> (default) -> criar  
 
 **Criando usuário para o banco de dados**
 ```
@@ -219,7 +219,7 @@ No módulo **mysql_db** podemos ter os seguintes state:
  
 # Importante
 No módulo **mysql_user** podemos ter os seguintes state:
-- present-> cria o usuário
+- present -> cria o usuário
 - absent -> apaga o usuário
 
 Fim
