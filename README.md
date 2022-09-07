@@ -195,5 +195,30 @@ No módulo **mysql_db** podemos ter os seguintes state:
 - absent -> destruir
 - dump -> fazer cópia
 - import -> importar através de um script
-- present ← (default) -> criar
+- present ← (default) -> criar  
+
+**Criando usuário para o banco de dados**
+```
+      - name: 'Cria usuário do MySQL'
+      mysql_user:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: wordpress_user
+        password: teste
+        priv: 'wordpress_db.*:ALL'
+        state: present
+      become: yes
+```
+**Explicação**  
+*mysql_user:*= módulo de criação de usuário
+*login_unix_socket: /var/run/mysqld/mysqld.sock*=tive que adicionar para o mysqld rodar.  
+*name: wordpress_user*= nome do usuário a ser criado  
+*password: teste*= senha do usuário  
+*priv: 'wordpress_db.*:ALL'*= permissões do usuário [banco.[tabela]:[tipo de permissão][localhost]]  
+*state: present*= estado que cria o bando. Ver abaixo a lista de estados  
+*become: yes*= o Mysql8 não aceita o usuário root, por isso o módulo precisa ser executado como sudo.  
+
+o módulo **mysql_user** podemos ter os seguintes state:
+- present-> cria o usuário
+- absent -> apaga o usuário
+
 Fim
