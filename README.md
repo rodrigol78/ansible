@@ -142,7 +142,7 @@ Assim o comando do ansible ficaria reduzido a:
 ansible-playbook provisioning.yml -i hosts
 ``` 
 # Configurando o banco de dados - Módulo mysql_db <h10>
-**MUITO IMPORTANTE**
+**MUITO IMPORTANTE**  
 Durante o processo de execução dos módulos do mysql tive alguns problemas.  
 Para resolvê-los tive que adicionar algumas tasks antes dos módulos mysql:  
 ```
@@ -183,6 +183,12 @@ O segundo instala o dentro do Python3 o pacote PyMySQL
         state: present 
       become: yes
 ```
+**Explicação**  
+*mysql_db:*= módulo de criação do banco  
+*login_unix_socket: /var/run/mysqld/mysqld.sock*=tive que adicionar para o mysqld rodar.  
+*name: wordpress_db*= nome do banco  
+*state: present*= estado que cria o bando. Ver abaixo a lista de estados  
+*become: yes*= o Mysql8 não aceita o usuário root, por isso o módulo precisa ser executado como sudo.  
 
 # Importante <h1>
 No módulo **mysql_db** podemos ter os seguintes state:
