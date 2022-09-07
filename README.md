@@ -128,7 +128,7 @@ Também existe esta maneira abaixo de ser instalar vários pacotes:
 **Explicação**
 *[wordpress]*= nome do projeto  
 *192.168.100.100*= ip da máquina  
-*ansible_user=vagrant*=nome de usuário  
-*ansible_ssh_private_key_file="/mnt/Dados/rodrigo/VMs/ambiente_dev/ansible/.vagrant/machines/wordpress/virtualbox/private_key"* caminho completo da chave privada.  
+*ansible_user=vagrant*= nome de usuário  
+*ansible_ssh_private_key_file="/mnt/Dados/rodrigo/VMs/ambiente_dev/ansible/.vagrant/machines/wordpress/virtualbox/private_key"*= caminho completo da chave privada.  
 
 Fim
