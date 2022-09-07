@@ -72,14 +72,15 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 *become: yes*= indica que o comando será rodado como root  
 
 # Importante <h1>
+```
+O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser executado várias vezes, mas não vai alterar nada se tudo estiver igual após a primeira execução.
+```  
 No módulo **apt** podemos ter os seguintes state:
 - absent -> desinstalar um pacote
 - build-dep -> instalar o pacote com as dependências dele
 - latest -> o pacote mais atual
 - present ← (default) -> criar 
-```
-O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser executado várias vezes, mas não vai alterar nada se tudo estiver igual após a primeira execução.
-```  
+
 
 # Simplificando o Playbook com with_items <h10>  
 ```
