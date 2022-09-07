@@ -15,7 +15,14 @@
         - mysql-server-8.0
         - php7.4-mysql
   
-  
+  - name: 'Cria o banco do MySQL'
+    mysql_db:
+      name: wordpress_db
+      login_user: root
+      state: present
+
+
+
   # tasks: 
   #   - name: 'Instala o PHP7.4'
   #     apt:
