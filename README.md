@@ -130,5 +130,9 @@ Também existe esta maneira abaixo de ser instalar vários pacotes:
 *192.168.100.100*= ip da máquina  
 *ansible_user=vagrant*= nome de usuário do ssh
 *ansible_ssh_private_key_file="/mnt/Dados/rodrigo/VMs/ambiente_dev/ansible/.vagrant/machines/wordpress/virtualbox/private_key"*= caminho completo da chave privada.  
-
+  
+Assim o comando do ansible ficaria reduzido a:
+```
+ansible-playbook provisioning.yml -i hosts
+```
 Fim
