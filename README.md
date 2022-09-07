@@ -108,5 +108,17 @@ O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser exec
 *- mysql-server-8.0*  
 *- php7.4-mysql*  = lista de itens a serem instalados  
 
+# IMPORTANTE
+Também existe esta maneira abaixo de ser instalar vários pacotes:  
+```
+- name: 'Instala pacotes do sistema operacional'
+      apt:
+        name:
+        - php5
+        - apache2
+        - libapache2-mod-php5
+        state: latest
+      become: yes
+```
 
 Fim
