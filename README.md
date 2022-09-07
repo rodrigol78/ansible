@@ -191,7 +191,6 @@ O segundo instala o dentro do Python3 o pacote PyMySQL
 *become: yes*= o Mysql8 não aceita o usuário root, por isso o módulo precisa ser executado como sudo.  
 
 # Importante  
-
 No módulo **mysql_db** podemos ter os seguintes state:
 - absent -> destruir
 - dump -> fazer cópia
