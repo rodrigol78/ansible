@@ -1,6 +1,10 @@
 ---
 - hosts: all
   tasks:
+    - name: 'apt-get Atualiza o repositório e o cache'
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+      become: yes
+
     - name: "Instala pacotes de dependencias do SO"
       apt:
         name: "{{ item }}"
@@ -14,31 +18,32 @@
         - libssh-4
         - mysql-server-8.0
         - php7.4-mysql
-  
-  - name: 'Cria o banco do MySQL'
-    mysql_db:
-      name: wordpress_db
-      login_user: root
-      state: present
+        -
+    - name: "Instala o Python3"
+      apt:
+        name: python3-pip
+        state: present
+      become: yes
 
+    - name: "Instala o PyMySQL"
+      pip:
+        name: PyMySQL
+      become: yes
+ 
+    - name: 'Cria o banco de dados mysql - wordpress_db'
+      mysql_db:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: wordpress_db
+        state: present 
+      become: yes
 
+    - name: 'Cria usuário do MySQL'
+      mysql_user:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: wordpress_user
+        password: teste
+        priv: 'wordpress_db.*:ALL'
+        state: present
+      become: yes
 
-  # tasks: 
-  #   - name: 'Instala o PHP7.4'
-  #     apt:
-  #       name: php7.4
-  #       state: latest
-  #     become: yes
-
-  #   - name: 'Instala Apache2'
-  #     apt:
-  #       name: apache2
-  #       state: latest
-  #     become: yes
-    
-  #   - name: 'Instala o modphp'
-  #     apt:
-  #       name: libapache2-mod-php7.4
-  #       state: latest
-  #     become: yes
      

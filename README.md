@@ -13,14 +13,14 @@ ansible -vvv wordpress -u vagrant --private-key .vagrant/machines/wordpress/virt
 *-m shell* = indica o módulo do ansible a ser usado (nesse caso o shell)  
 *-a 'echo Hello, World'* = argumento que foi passado pro sheel (nesse caso o comando echo 'Hello, World'  
 
-# Criando o primeiro Playbook <h10>
+# Criando o primeiro Playbook - Módulo shell<h10>
 Playbook tem a extensão .yml, sua função é passar uma série de comandos para o ansible.  
 **Ex:**  
 ```
 ---
 - hosts: all
     tasks: 
-     - shel: 'echo hello > /vagrant/world.txt'
+     - shell: 'echo hello > /vagrant/world.txt'
 ```
 
 **Explicação**
@@ -41,7 +41,7 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 *-i hosts* =  indica o arquivo hosts que será usado  
 *--private-key .vagrant/machines/wordpress/virtualbox/private_key* = arquivo de chave primária já criado pelo vagrant  
 
-# Instalando dependências <h10>
+# Instalando dependências - Módulo apt <h10>
 ```
 - hosts: all
   tasks: 
@@ -141,6 +141,49 @@ Assim o comando do ansible ficaria reduzido a:
 ```
 ansible-playbook provisioning.yml -i hosts
 ``` 
+# Configurando o banco de dados - Módulo mysql_db <h10>
+**MUITO IMPORTANTE**
+Durante o processo de execução dos módulos do mysql tive alguns problemas.  
+Para resolvê-los tive que adicionar algumas tasks antes dos módulos mysql:  
+```
+- name: 'apt-get Atualiza o repositório e o cache'
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+      become: yes
+```
+**Explicação**
+*apt:*= módulo de instalação de pacote  
+*update_cache=yes*= atualiza o cache de pacotes  
+*force_apt=yes*= força a atualização do repositório de pacotes  
+*cache_valid_time=3600*= perído de duração do cache  
+Obs: coloco no início para as próximas tasks, se precisarem de pacotes já utilizará os atualizados.  
+
+```
+- name: "Instala o Python3"
+      apt:
+        name: python3-pip
+        state: present
+      become: yes
+
+    - name: "Instala o PyMySQL"
+      pip:
+        name: PyMySQL
+      become: yes
+```
+**Explicação**
+
+O primeiro instala o Python3  
+O segundo instala o dentro do Python3 o pacote PyMySQL  
+
+**Criando o banco de dados**
+```
+ - name: 'Cria o banco de dados mysql - wordpress_db'
+      mysql_db:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: wordpress_db
+        state: present 
+      become: yes
+```
+
 # Importante <h1>
 No módulo **mysql_db** podemos ter os seguintes state:
 - absent -> destruir
