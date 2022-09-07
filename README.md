@@ -142,7 +142,7 @@ Assim o comando do ansible ficaria reduzido a:
 ansible-playbook provisioning.yml -i hosts
 ``` 
 # Configurando o banco de dados - Módulo mysql_db <h10>
-**MUITO IMPORTANTE**  
+#MUITO IMPORTANTE  
 Durante o processo de execução dos módulos do mysql tive alguns problemas.  
 Para resolvê-los tive que adicionar algumas tasks antes dos módulos mysql:  
 ```
