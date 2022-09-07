@@ -217,7 +217,7 @@ No módulo **mysql_db** podemos ter os seguintes state:
 *state: present*= estado que cria o bando. Ver abaixo a lista de estados  
 *become: yes*= o Mysql8 não aceita o usuário root, por isso o módulo precisa ser executado como sudo. 
  
-#Importante
+# Importante
 o módulo **mysql_user** podemos ter os seguintes state:
 - present-> cria o usuário
 - absent -> apaga o usuário
