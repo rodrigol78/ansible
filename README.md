@@ -263,6 +263,29 @@ No módulo **mysql_user** podemos ter os seguintes state:
 *remote_src: yes*= se o arquivo está na VM utilizamos **yes** se na máquina controladora usamos **no**  
 *become: yes*= executa o comando como sudo 
 
+# Substituindo valores dentro do arquivo de configuração Wordpress  
+ ```
+ - name: 'Configura o wp-config com as entradas do banco de dados'     
+      replace:
+        path: '/var/www/wordpress/wp-config.php'
+        regexp: "{{ item.regex }}"
+        replace: "{{ item.value }}"
+      with_items:
+          - { regex: 'database_name_here', value: 'wordpress_db'}
+          - { regex: 'username_here', value: 'wordpress_user'}
+          - { regex: 'password_here', value: 'teste'}
+      become: yes
+ ```
+ **Explicação**  
+*replace:*= módulo que substitui termos no arquivo  
+*path: '/var/www/wordpress/wp-config.php'*= arquivo que deseja substituir valores  
+*regexp: "{{ item.regex }}"*= termo que será substituido. Nesse caso usamos uma variável que representa o valor.  
+*replace: "{{ item.value }}"*= termo que substituirá o termo original. Ness caso usamos uma variável que representa o valor.  
+*with_items:* módulo que utiliza uma lista de itens*  
+*- { regex: 'database_name_here', value: 'wordpress_db'}*= item 1 da lista que contem **variável01**, **conteúdo01**, **variável02**, **conteúdo02**  
+*- { regex: 'username_here', value: 'wordpress_user'}*= *= item 2 da lista que contem **variável01**, **conteúdo01**, **variável02**, **conteúdo02**  
+*- { regex: 'password_here', value: 'teste'}*= *= item 3 da lista que contem **variável01**, **conteúdo01**, **variável02**, **conteúdo02**  
+*become: yes* = executa o comando como sudo
    
 
 Fim
