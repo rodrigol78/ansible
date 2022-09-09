@@ -236,7 +236,7 @@ No módulo **mysql_user** podemos ter os seguintes state:
         remote_src: True
       become: yes
  ```
- **Explicação
+ **Explicação**
  *get_url:*= módulo baixa arquivo do site (pode ser https,http ou ftp)  
  *url: 'https://wordpress.org/latest.tar.gz'*= endereço de onde baixamos o arquivo  
  *dest: '/tmp/wordpress.tar.gz'*= destino e nome que desejamos dar ao arquivo baixado  
