@@ -247,4 +247,22 @@ No módulo **mysql_user** podemos ter os seguintes state:
 *remote_src: True*= se o arquivo está na VM utilizamos **True** se na máquina controladora usamos **False**  
 *become: yes*= executa o comando como sudo  
 
+# Copiando e modificando o nome do arquivo de configuração Wordpress  
+ ```
+ - name: 'Copia o arquivo de configuração de exemplo para a pasta desejada'
+      copy:
+        src: '/var/www/wordpress/wp-config-sample.php'
+        dest: '/var/www/wordpress/wp-config.php'
+        remote_src: yes
+      become: yes
+ ```
+ **Explicação**  
+*copy:*= módulo que copia arquivos  
+*src: '/var/www/wordpress/wp-config-sample.php'*= arquivo(s) que se deseja copiar  
+*dest: '/var/www/wordpress/wp-config.php'*= destino que se deseja copiar o arquivo (basta colocar o novo nome se quiser mudar)  
+*remote_src: yes*= se o arquivo está na VM utilizamos **yes** se na máquina controladora usamos **no**  
+*become: yes*= executa o comando como sudo 
+
+   
+
 Fim
