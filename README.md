@@ -73,7 +73,9 @@ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/mac
 
 # Importante <h1>
 ```
-O Ansible trabalha com o princípio da idempotência, ou seja, ele pode ser executado várias vezes, mas não vai alterar nada se tudo estiver igual após a primeira execução.
+O Ansible trabalha com o princípio da idempotência,
+ou seja, ele pode ser executado várias vezes,
+mas não vai alterar nada se tudo estiver igual após a primeira execução.
 ```  
 No módulo **apt** podemos ter os seguintes state:
 - absent -> desinstalar um pacote
@@ -318,7 +320,7 @@ handlers:
       become: yes
 ```
 **Explicação Handlers**  
-*handlers:*= nome do módulo que gera os handlers (espécie função). Precisa estar no mesmo nível de identração do ***Tasks**  
+*handlers:*= nome do módulo que gera os handlers (espécie função). Precisa estar no mesmo nível de identração do **Tasks**  
 *- name: reinicia o apache*= nome do handler. Sempre que for necessário executar o handler, esse será o nome que deverá ser citado  
 *service:*= módulo do handler que executa o daemond do linux  
 *name: apache2*= serviço que executa o os serviços do apache  
