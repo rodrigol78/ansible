@@ -286,6 +286,43 @@ No módulo **mysql_user** podemos ter os seguintes state:
 *- { regex: 'username_here', value: 'wordpress_user'}*= *= item 2 da lista que contem **variável01**, **conteúdo01**, **variável02**, **conteúdo02**  
 *- { regex: 'password_here', value: 'teste'}*= *= item 3 da lista que contem **variável01**, **conteúdo01**, **variável02**, **conteúdo02**  
 *become: yes* = executa o comando como sudo
-   
+
+
+# Substituindo valores dentro do arquivo de configuração 000-default.conf (configuração do Apache)
+```
+- name: 'Configura o 000-default.conf com o caminho correto'     
+      replace:
+        path: '/etc/apache2/sites-available/000-default.conf'
+        regexp: '/var/www/html'
+        replace: '/var/www/wordpress'
+      become: yes
+      notify:
+        - reinicia o apache
+```   
+**Explicação**  
+*replace:*= módulo que substitui termos no arquivo  
+*path: '/etc/apache2/sites-available/000-default.conf'*= arquivo que deseja substituir valores  
+*regexp: '/var/www/html'*= termo que será substituido.  
+*replace: '/var/www/wordpress'*= termo que substituirá o termo original  
+*become: yes*= executa o comando como sudo  
+# Muito Importante
+*notify:*= módulo que chama um handler que foi definido no início do algorítimo (olhar abaixo a explicação)  
+*- reinicia o apache*= nome do handler que será executado  
+
+```
+handlers:
+    - name: reinicia o apache
+      service: 
+        name: apache2
+        state: restarted
+      become: yes
+```
+**Explicação Handlers**
+*handlers:*= nome do módulo que gera os handlers (espécie função)  
+*- name: reinicia o apache*= nome do handler. Sempre que for necessário executar o handler, esse será o nome que deverá ser citado  
+*service:*= módulo do handler que executa o daemond do linux  
+*name: apache2*= serviço que executa o os serviços do apache  
+*state: restarted*= estado que considera sucesso (reiniciado)  
+*become: yes*= executa o comando como sudo  
 
 Fim

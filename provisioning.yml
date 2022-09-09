@@ -1,5 +1,12 @@
 ---
 - hosts: all
+  handlers:
+    - name: reinicia o apache
+      service: 
+        name: apache2
+        state: restarted
+      become: yes
+
   tasks:
     - name: 'apt-get Atualiza o repositório e o cache'
       apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
@@ -75,3 +82,12 @@
           - { regex: 'username_here', value: 'wordpress_user'}
           - { regex: 'password_here', value: 'teste'}
       become: yes
+
+    - name: 'Configura o 000-default.conf com o caminho correto'     
+      replace:
+        path: '/etc/apache2/sites-available/000-default.conf'
+        regexp: '/var/www/html'
+        replace: '/var/www/wordpress'
+      become: yes
+      notify:
+        - reinicia o apache
