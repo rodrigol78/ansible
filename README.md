@@ -318,7 +318,7 @@ handlers:
       become: yes
 ```
 **Explicação Handlers**  
-*handlers:*= nome do módulo que gera os handlers (espécie função)  
+*handlers:*= nome do módulo que gera os handlers (espécie função). Precisa estar no mesmo nível de identração do ***Tasks**  
 *- name: reinicia o apache*= nome do handler. Sempre que for necessário executar o handler, esse será o nome que deverá ser citado  
 *service:*= módulo do handler que executa o daemond do linux  
 *name: apache2*= serviço que executa o os serviços do apache  
