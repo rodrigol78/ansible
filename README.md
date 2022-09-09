@@ -317,7 +317,7 @@ handlers:
         state: restarted
       become: yes
 ```
-**Explicação Handlers**
+**Explicação Handlers**  
 *handlers:*= nome do módulo que gera os handlers (espécie função)  
 *- name: reinicia o apache*= nome do handler. Sempre que for necessário executar o handler, esse será o nome que deverá ser citado  
 *service:*= módulo do handler que executa o daemond do linux  
