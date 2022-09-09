@@ -213,7 +213,7 @@ No módulo **mysql_db** podemos ter os seguintes state:
 *login_unix_socket: /var/run/mysqld/mysqld.sock*=tive que adicionar para o mysqld rodar.  
 *name: wordpress_user*= nome do usuário a ser criado  
 *password: teste*= senha do usuário  
-*priv: 'wordpress_db.*:ALL'*= permissões do usuário [banco.[tabela]:[tipo de permissão][localhost]]  
+*priv: 'wordpress_db.*:ALL'*= permissões do usuário [banco].[tabela]:[tipo de permissão][localhost]]  
 *state: present*= estado que cria o bando. Ver abaixo a lista de estados  
 *become: yes*= o Mysql8 não aceita o usuário root, por isso o módulo precisa ser executado como sudo. 
  
@@ -221,5 +221,30 @@ No módulo **mysql_db** podemos ter os seguintes state:
 No módulo **mysql_user** podemos ter os seguintes state:
 - present -> cria o usuário
 - absent -> apaga o usuário
+
+# Baixando e descompactando arquivo Wordpress  
+ ```
+ - name: 'Download do Wordpress'
+      get_url:
+        url: 'https://wordpress.org/latest.tar.gz'
+        dest: '/tmp/wordpress.tar.gz'
+
+    - name: 'Descompacta o wordpress'
+      unarchive:
+        src: '/tmp/wordpress.tar.gz'
+        dest: '/var/www/'
+        remote_src: True
+      become: yes
+ ```
+ **Explicação
+ *get_url:*= módulo baixa arquivo do site (pode ser https,http ou ftp)  
+ *url: 'https://wordpress.org/latest.tar.gz'*= endereço de onde baixamos o arquivo  
+ *dest: '/tmp/wordpress.tar.gz'*= destino e nome que desejamos dar ao arquivo baixado  
+   
+*unarchive:* = módulo que decompacta arquivos  
+*src: '/tmp/wordpress.tar.gz'*= qual arquivo queremos descompactar  
+*dest: '/var/www/'*= destino onde queremos descompactar o arquivo  
+*remote_src: True*= se o arquivo está na VM utilizamos **True** se na máquina controladora usamos **False**  
+*become: yes*= executa o comando como sudo  
 
 Fim
