@@ -68,8 +68,6 @@
       become: yes
 
   tasks:
-    
-
     - name: "Instala pacotes de dependencias do SO"
       apt:
         name: "{{ item }}"
