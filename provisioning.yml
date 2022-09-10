@@ -29,19 +29,19 @@
         name: PyMySQL
       become: yes
 
-    - name: 'Cria o banco de dados mysql - wordpress_db'
+    - name: 'Cria o banco de dados mysql - {{ wp_db_name }}'
       mysql_db:
         login_unix_socket: /var/run/mysqld/mysqld.sock
-        name: wordpress_db
+        name: "{{ wp_db_name }}"
         state: present 
       become: yes
 
     - name: 'Cria usuário do MySQL'
       mysql_user:
         login_unix_socket: /var/run/mysqld/mysqld.sock
-        name: wordpress_user
-        password: teste
-        priv: 'wordpress_db.*:ALL'
+        name: "{{ wp_username }}"
+        password: "{{ wp_password }}"
+        priv: "{{ wp_db_name }}.*:ALL"
         state: present
         host: "{{ item }}"
       with_items:
@@ -106,10 +106,10 @@
         regexp: "{{ item.regex }}"
         replace: "{{ item.value }}"
       with_items:
-          - { regex: 'database_name_here', value: 'wordpress_db'}
-          - { regex: 'username_here', value: 'wordpress_user'}
-          - { regex: 'password_here', value: 'teste'}
-          - { regex: 'localhost', value: '192.168.100.99'}
+          - { regex: 'database_name_here', value: "{{ wp_db_name }}"}
+          - { regex: 'username_here', value: "{{ wp_username }}"}
+          - { regex: 'password_here', value: "{{ wp_password }}"}
+          - { regex: 'localhost', value: "{{ mysql_host }}"}
       become: yes
 
     - name: 'Configura o 000-default.conf com o caminho correto'     
