@@ -360,6 +360,6 @@ handlers:
         - python3-pip
 ```
 **Explicação**  
-Como qualquer grupo de hosts, se começa com hosts: [nome do host] e abaixo se coloca o task e as tarefas  
+Como qualquer grupo de hosts, se começa com **hosts: [nome do host]** e abaixo se coloca o task e as tarefas.  
 
 Fim
