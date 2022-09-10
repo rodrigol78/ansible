@@ -1,4 +1,10 @@
 ---
+- hosts: all
+  tasks:
+    - name: 'apt-get Atualiza o repositório e o cache'
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+      become: yes
+  
 - hosts: database
   handlers:
     - name: reinicia o mysql
@@ -6,11 +12,8 @@
         name: mysql
         state: restarted
       become: yes
-  tasks:
-    - name: 'apt-get Atualiza o repositório e o cache'
-      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
-      become: yes
 
+  tasks:
     - name: "Instala pacotes de dependencias do SO"
       apt:
         name: "{{ item }}"
@@ -65,9 +68,7 @@
       become: yes
 
   tasks:
-    - name: 'apt-get Atualiza o repositório e o cache'
-      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
-      become: yes
+    
 
     - name: "Instala pacotes de dependencias do SO"
       apt:
