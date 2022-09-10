@@ -327,4 +327,39 @@ handlers:
 *state: restarted*= estado que considera sucesso (reiniciado)  
 *become: yes*= executa o comando como sudo  
 
+# Dividindo os servidores em grupos diferentes dentro de hosts
+**Arquivo host**  
+```
+[wordpress]
+192.168.100.100 ansible_user=vagrant ansible_ssh_private_key_file="/mnt/Dados/rodrigo/VMs/ambiente_dev/ansible/.vagrant/machines/wordpress/virtualbox/private_key"
+[database]
+192.168.100.99 ansible_user=vagrant ansible_ssh_private_key_file="/mnt/Dados/rodrigo/VMs/ambiente_dev/ansible/.vagrant/machines/mysql/virtualbox/private_key"
+```
+**Explicação**  
+*[wordpress]*= defini o grupo de hosts, o que vier abaixo estará dentro deste grupo.  
+
+**Arquivo .yml**
+```
+- hosts: database
+  handlers:
+    - name: reinicia o mysql
+      service: 
+        name: mysql
+        state: restarted
+      become: yes
+
+  tasks:
+    - name: "Instala pacotes de dependencias do SO"
+      apt:
+        name: "{{ item }}"
+        state: latest
+      become: yes
+      with_items:
+        - libssh-4
+        - mysql-server-8.0
+        - python3-pip
+```
+**Explicação**  
+Como qualquer grupo de hosts, se começa com hosts: [nome do host] e abaixo se coloca o task e as tarefas  
+
 Fim
