@@ -1,5 +1,62 @@
 ---
-- hosts: all
+- hosts: database
+  handlers:
+    - name: reinicia o mysql
+      service: 
+        name: mysql
+        state: restarted
+      become: yes
+  tasks:
+    - name: 'apt-get Atualiza o repositório e o cache'
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+      become: yes
+
+    - name: "Instala pacotes de dependencias do SO"
+      apt:
+        name: "{{ item }}"
+        state: latest
+      become: yes
+      with_items:
+        - libssh-4
+        - mysql-server-8.0
+        - python3-pip
+
+    - name: "Instala o PyMySQL"
+      pip:
+        name: PyMySQL
+      become: yes
+
+    - name: 'Cria o banco de dados mysql - wordpress_db'
+      mysql_db:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: wordpress_db
+        state: present 
+      become: yes
+
+    - name: 'Cria usuário do MySQL'
+      mysql_user:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: wordpress_user
+        password: teste
+        priv: 'wordpress_db.*:ALL'
+        state: present
+        host: "{{ item }}"
+      with_items:
+        - 'localhost'
+        - '127.0.0.1'
+        - '192.168.100.100'
+      become: yes
+    
+    - name: 'Configura o mysqld.cnf para aceitar conexão externa'     
+      replace:
+        path: '/etc/mysql/mysql.conf.d/mysqld.cnf'
+        regexp: '127.0.0.1'
+        replace: '0.0.0.0'
+      become: yes
+      notify:
+        - reinicia o mysql
+
+- hosts: wordpress
   handlers:
     - name: reinicia o apache
       service: 
@@ -23,36 +80,8 @@
         - libapache2-mod-php7.4
         - php7.4-gd
         - libssh-4
-        - mysql-server-8.0
         - php7.4-mysql
-        -
-    - name: "Instala o Python3"
-      apt:
-        name: python3-pip
-        state: present
-      become: yes
 
-    - name: "Instala o PyMySQL"
-      pip:
-        name: PyMySQL
-      become: yes
- 
-    - name: 'Cria o banco de dados mysql - wordpress_db'
-      mysql_db:
-        login_unix_socket: /var/run/mysqld/mysqld.sock
-        name: wordpress_db
-        state: present 
-      become: yes
-
-    - name: 'Cria usuário do MySQL'
-      mysql_user:
-        login_unix_socket: /var/run/mysqld/mysqld.sock
-        name: wordpress_user
-        password: teste
-        priv: 'wordpress_db.*:ALL'
-        state: present
-      become: yes
- 
     - name: 'Download do Wordpress'
       get_url:
         url: 'https://wordpress.org/latest.tar.gz'
@@ -81,6 +110,7 @@
           - { regex: 'database_name_here', value: 'wordpress_db'}
           - { regex: 'username_here', value: 'wordpress_user'}
           - { regex: 'password_here', value: 'teste'}
+          - { regex: 'localhost', value: '192.168.100.99'}
       become: yes
 
     - name: 'Configura o 000-default.conf com o caminho correto'     
