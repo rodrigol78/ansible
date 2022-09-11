@@ -128,7 +128,7 @@ Também existe esta maneira abaixo de ser instalar vários pacotes:
         state: latest
       become: yes
 ```
-# Passando usuário e chave privada através do arquivo hosts <10>
+# Passando usuário e chave privada através do arquivo hosts
 ```
 [wordpress]
 192.168.100.100 ansible_user=vagrant ansible_ssh_private_key_file="/mnt/Dados/rodrigo/VMs/ambiente_dev/ansible/.vagrant/machines/wordpress/virtualbox/private_key"
@@ -224,7 +224,7 @@ No módulo **mysql_user** podemos ter os seguintes state:
 - present -> cria o usuário
 - absent -> apaga o usuário
 
-# Baixando e descompactando arquivo Wordpress  
+# Baixando e descompactando arquivo Wordpress -  Módulo get_url e unarchive 
  ```
  - name: 'Download do Wordpress'
       get_url:
@@ -249,7 +249,7 @@ No módulo **mysql_user** podemos ter os seguintes state:
 *remote_src: True*= se o arquivo está na VM utilizamos **True** se na máquina controladora usamos **False**  
 *become: yes*= executa o comando como sudo  
 
-# Copiando e modificando o nome do arquivo de configuração Wordpress  
+# Copiando e modificando o nome do arquivo de configuração Wordpress - Módulo copy  
  ```
  - name: 'Copia o arquivo de configuração de exemplo para a pasta desejada'
       copy:
@@ -265,7 +265,7 @@ No módulo **mysql_user** podemos ter os seguintes state:
 *remote_src: yes*= se o arquivo está na VM utilizamos **yes** se na máquina controladora usamos **no**  
 *become: yes*= executa o comando como sudo 
 
-# Substituindo valores dentro do arquivo de configuração Wordpress  
+# Substituindo valores dentro do arquivo de configuração Wordpress - Módulo replace  
  ```
  - name: 'Configura o wp-config com as entradas do banco de dados'     
       replace:
