@@ -362,4 +362,32 @@ handlers:
 **Explicação**  
 Como qualquer grupo de hosts, se começa com **hosts: [nome do host]** e abaixo se coloca o task e as tarefas.  
 
+# Trabalhando com variáveis
+Arquivo .yml dentro da pasta group_vars. Crie uma geral com o nome de all.yml como e exemplo abaixo:
+```
+wp_username: wordpress_user
+wp_db_name: wordpress
+wp_password: teste
+mysql_host: '192.168.100.99'
+```
+Ou crie um com o nome do grupo de hosts, que se encontra dentro do arquivo hosts.  
+
+**Declarando dentro do arquivo de provision.yml**
+```
+- name: 'Configura o wp-config com as entradas do banco de dados'     
+      replace:
+        path: '/var/www/wordpress/wp-config.php'
+        regexp: "{{ item.regex }}"
+        replace: "{{ item.value }}"
+      with_items:
+          - { regex: 'database_name_here', value: "{{ wp_db_name }}"}
+          - { regex: 'username_here', value: "{{ wp_username }}"}
+          - { regex: 'password_here', value: "{{ wp_password }}"}
+          - { regex: 'localhost', value: "{{ mysql_host }}"}
+      become: yes
+```
+**Explicação**  
+*{ regex: 'database_name_here', value: "{{ wp_db_name }}"}*= coloque o nome entre " e {{.  
+
+
 Fim
