@@ -388,6 +388,15 @@ Ou crie um com o nome do grupo de hosts, que se encontra dentro do arquivo hosts
 ```
 **Explicação**  
 *{ regex: 'database_name_here', value: "{{ wp_db_name }}"}*= coloque o nome entre " e {{.  
+**Importante**  
+Existem algumas regras que devemos considerar na hora de declarar uma varíavel (como em qualquer outra ferramenta ou linguagem de programação). Por exemplo, uma variável não deve ter um ponto, espaço ou hífen no nome. Todas as declarações abaixo são inválidas:
+
+```
+foo-var: 'nao_pode_ter_hifen'
+foo var: 'nem_ter_espaco'
+foo.var: 'tambem_nao_pode_ter_ponto'
+12foovar: 'nao_pode_ter_numero_no_inicio'
+```
 
 # Utilizando Templates
 **Importante**  
