@@ -516,7 +516,6 @@ Basta copiar o arquivo que será utilizando como template para dentro da pasta t
 **Explicação**  
 
 *- hosts: database*= nome do grupo de hosts que se encontra no arquivo **hosts**  
-
 *roles:*= módulo que executa as roles  
 *- mysql =* nome da pasta que contem as tasks, handlers e templates  
 
