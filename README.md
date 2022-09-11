@@ -1,4 +1,4 @@
-**Esse é um projeto que criei para minha aula sobre Ansible na Alura.**
+**Esse é um projeto que criei para minha aula sobre Ansible na Alura. Espero que se não ajudar, não atrapalhe seus estudos.**
 
 # Comando inicial <h10>
 ```
