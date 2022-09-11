@@ -362,7 +362,7 @@ handlers:
 **Explicação**  
 Como qualquer grupo de hosts, se começa com **hosts: [nome do host]** e abaixo se coloca o task e as tarefas.  
 
-# Trabalhando com variáveis
+# Trabalhando com variáveis - Pasta group_vars
 Arquivo .yml dentro da pasta group_vars. Crie um geral com o nome de all.yml como e exemplo abaixo:
 ```
 wp_username: wordpress_user
@@ -399,7 +399,7 @@ foo.var: 'tambem_nao_pode_ter_ponto'
 12foovar: 'nao_pode_ter_numero_no_inicio'
 ```
 
-# Utilizando Templates
+# Utilizando Templates - Módulo Templates
 **Importante**  
 Templates são arquivos que precisam ter a extensão .j2 e ficar dentro da pasta templates dentro do projeto.  
 **Arquivo 000.default.conf**
@@ -428,7 +428,7 @@ ServerAdmin webmaster@localhost
 *notify:*= handler  
 *- reinicia o apache*= nome do handler declarado anteriormente.  
 
-# Utilizando Roles
+# Utilizando Roles - Móduo roles
 
 Para orgarnizar e tornar modular o código, podemos o dividir em roles. Roles possuem **tasks**, **handlers** e **templates**  
 Primeiro precisamos criar uma pasta com o nome da role que iremos utilizar e dentro dela uma pasta para cada coisa (tasks, handlers e templates)  
@@ -499,5 +499,23 @@ Esse arquivo contém o código do Handler de reinicilização do Mysql.
 
 **Templates usando roles**  
 Basta copiar o arquivo que será utilizando como template para dentro da pasta template. Obs: Continua sendo necessário que ele tenha a extensão **.j2**  
+
+**Arquivo provision.yml**
+```
+---
+- hosts: database
+  roles:
+    - mysql
+
+- hosts: wordpress
+  roles:
+    - webservice
+    - wordpress  
+```
+**Explicação**
+*- hosts: database*= nome do grupo de hosts que se encontra no arquivo **hosts**  
+*roles:*= módulo que executa as roles  
+- mysql = nome da pasta que contem as tasks, handlers e templates  
+
 
 Fim
