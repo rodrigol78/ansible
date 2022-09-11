@@ -95,14 +95,14 @@
 
     - name: 'Copia o arquivo de configuração de exemplo para a pasta desejada'
       copy:
-        src: '/var/www/wordpress/wp-config-sample.php'
-        dest: '/var/www/wordpress/wp-config.php'
+        src: "{{ wp_installation_dir }}/wp-config-sample.php"
+        dest: "{{ wp_installation_dir }}/wp-config.php"
         remote_src: yes
       become: yes
     
     - name: 'Configura o wp-config com as entradas do banco de dados'     
       replace:
-        path: '/var/www/wordpress/wp-config.php'
+        path: "{{ wp_installation_dir }}/wp-config.php"
         regexp: "{{ item.regex }}"
         replace: "{{ item.value }}"
       with_items:
@@ -112,11 +112,11 @@
           - { regex: 'localhost', value: "{{ mysql_host }}"}
       become: yes
 
-    - name: 'Configura o 000-default.conf com o caminho correto'     
-      replace:
-        path: '/etc/apache2/sites-available/000-default.conf'
-        regexp: '/var/www/html'
-        replace: '/var/www/wordpress'
+    - name: 'Configura o 000-default.conf com o caminho correto'
+      template:
+        src: 'templates/000-default.conf.j2'
+        dest: '/etc/apache2/sites-available/000-default.conf'
       become: yes
       notify:
-        - reinicia o apache
+         - reinicia o apache
+    

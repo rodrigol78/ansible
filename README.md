@@ -363,7 +363,7 @@ handlers:
 Como qualquer grupo de hosts, se começa com **hosts: [nome do host]** e abaixo se coloca o task e as tarefas.  
 
 # Trabalhando com variáveis
-Arquivo .yml dentro da pasta group_vars. Crie uma geral com o nome de all.yml como e exemplo abaixo:
+Arquivo .yml dentro da pasta group_vars. Crie um geral com o nome de all.yml como e exemplo abaixo:
 ```
 wp_username: wordpress_user
 wp_db_name: wordpress
@@ -389,5 +389,33 @@ Ou crie um com o nome do grupo de hosts, que se encontra dentro do arquivo hosts
 **Explicação**  
 *{ regex: 'database_name_here', value: "{{ wp_db_name }}"}*= coloque o nome entre " e {{.  
 
+# Utilizando Templates
+**Importante**  
+Templates são arquivos que precisam ter a extensão .j2 e ficar dentro da pasta templates dentro do projeto.  
+**Arquivo 000.default.conf**
+```
+ServerAdmin webmaster@localhost
+	DocumentRoot {{ wp_installation_dir }}
+```
+**Explicação**  
+*DocumentRoot {{ wp_installation_dir }}*= substituímos o caminho do DocumentRoot por uma variável. (Essa variável precisa ser declarada em um arquivo .yml dentro de group_vars)  
+
+**Arquivo provision.yml**
+```
+- name: 'Configura o 000-default.conf com o caminho correto'
+      template:
+        src: 'templates/000-default.conf.j2'
+        dest: '/etc/apache2/sites-available/000-default.conf'
+      become: yes
+      notify:
+         - reinicia o apache
+```
+**Explicação**  
+*template:*= módulo que utiliza os templates  
+*src: 'templates/000-default.conf.j2'*= arquivo de template (lembrando que precisa ter a extensão .j2 e estar dentro da pasta template)  
+*dest: '/etc/apache2/sites-available/000-default.conf'*= destino do arquivo template com o novo noome.  
+*become: yes*= executa o módulo como sudo  
+*notify:*= handler  
+*- reinicia o apache*= nome do handler declarado anteriormente.  
 
 Fim
