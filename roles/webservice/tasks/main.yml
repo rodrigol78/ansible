@@ -1,0 +1,13 @@
+---
+- name: "Instala pacotes de dependencias do SO"
+  apt:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - php7.4
+    - apache2
+    - libapache2-mod-php7.4
+    - php7.4-gd
+    - libssh-4
+    - php7.4-mysql

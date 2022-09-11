@@ -1,0 +1,45 @@
+---
+- name: "Instala pacotes de dependencias do SO"
+  apt:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - libssh-4
+    - mysql-server-8.0
+    - python3-pip
+
+- name: "Instala o PyMySQL"
+  pip:
+    name: PyMySQL
+  become: yes
+
+- name: 'Cria o banco de dados mysql - {{ wp_db_name }}'
+  mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: "{{ wp_db_name }}"
+    state: present 
+  become: yes
+
+- name: 'Cria usuário do MySQL'
+  mysql_user:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: "{{ wp_username }}"
+    password: "{{ wp_password }}"
+    priv: "{{ wp_db_name }}.*:ALL"
+    state: present
+    host: "{{ item }}"
+  with_items:
+    - 'localhost'
+    - '127.0.0.1'
+    - '192.168.100.100'
+  become: yes
+    
+- name: 'Configura o mysqld.cnf para aceitar conexão externa'     
+  replace:
+    path: '/etc/mysql/mysql.conf.d/mysqld.cnf'
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+  become: yes
+  notify:
+    - reinicia o mysql
