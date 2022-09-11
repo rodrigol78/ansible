@@ -454,7 +454,7 @@ Dentro de tasks e handers criamos um arquivo com o nome de **main.yml**
 - name: 'Cria o banco de dados mysql - {{ wp_db_name }}'
   mysql_db:
     login_unix_socket: /var/run/mysqld/mysqld.s**ock**  
-    
+
     name: "{{ wp_db_name }}"
     state: present 
   become: yes
@@ -484,6 +484,7 @@ Dentro de tasks e handers criamos um arquivo com o nome de **main.yml**
 ```
 **Explicação**  
 Esse arquivo contém o código relacionado a tarefa de instalar, criar e configurar o BD do Wordpress dentro do Mysql  
+
 **Arquivo main.yml da role handler do host Mysql**  
 ```
 ---
