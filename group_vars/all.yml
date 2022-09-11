@@ -1,5 +1,4 @@
 wp_username: wordpress_user
 wp_db_name: wordpress
 wp_password: teste
-mysql_host: '192.168.100.99' 
 wp_installation_dir: '/var/www/wordpress'

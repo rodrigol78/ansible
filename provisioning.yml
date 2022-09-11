@@ -11,5 +11,5 @@
 
 - hosts: wordpress
   roles:
-    - webservice
+#    - webservice
     - wordpress    

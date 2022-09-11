@@ -30,9 +30,7 @@
     state: present
     host: "{{ item }}"
   with_items:
-    - 'localhost'
-    - '127.0.0.1'
-    - '192.168.100.100'
+    - "{{ wp_host_ip }}"
   become: yes
     
 - name: 'Configura o mysqld.cnf para aceitar conexão externa'     

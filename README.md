@@ -519,5 +519,31 @@ Basta copiar o arquivo que será utilizando como template para dentro da pasta t
 *roles:*= módulo que executa as roles  
 *- mysql =* nome da pasta que contem as tasks, handlers e templates  
 
+# Passando valores default para as variáveis
+Para evitar que valores não sejam informados, podemos criar uma configuração em que se define valores padrão para as variáveis.  
+**Explicação**  
+Para isso devemos criar dentro da role específica daquela variável uma pasta chamada **defaults** e dentro dela um arquivo **main.yml**. Nele declaramos o valor da variável (incluse como lista se usarmos mais de um valor).
+```
+---
+wp_host_ip:
+  - localhost
+  - '127.0.0.1'
+  - '192.168.100.100'
+```
 
-Fim
+# Informando dependências de roles - Módulo dependencies
+Para evitar que uma role necessária seja esquecida, podemos definir dependências entre elas.  
+
+**Explicação**  
+ara isso devemos criar dentro da role específica uma uma pasta chamada **meta** e dentro dela um arquivo **main.yml**. Nele delclaramos a dependências dessa role.  
+```
+---
+dependencies:
+  - webservice
+```
+**Explicação**  
+---
+*dependencies:*= módulo de declaração de dependência.  
+*- webservice*= role que deve ser executada antes da role que estamos.  
+
+# Fim
