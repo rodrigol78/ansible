@@ -428,4 +428,75 @@ ServerAdmin webmaster@localhost
 *notify:*= handler  
 *- reinicia o apache*= nome do handler declarado anteriormente.  
 
+# Utilizando Roles
+
+Para orgarnizar e tornar modular o código, podemos o dividir em roles. Roles possuem **tasks**, **handlers** e **templates**  
+Primeiro precisamos criar uma pasta com o nome da role que iremos utilizar e dentro dela uma pasta para cada coisa (tasks, handlers e templates)  
+Dentro de tasks e handers criamos um arquivo com o nome de **main.yml**  
+**Arquivo main.yml da role tasks do host Mysql**  
+```
+---
+- name: "Instala pacotes de dependencias do SO"
+  apt:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - libssh-4
+    - mysql-server-8.0
+    - python3-pip
+
+- name: "Instala o PyMySQL"
+  pip:
+    name: PyMySQL
+  become: yes
+
+- name: 'Cria o banco de dados mysql - {{ wp_db_name }}'
+  mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.s**ock**  
+    
+    name: "{{ wp_db_name }}"
+    state: present 
+  become: yes
+
+- name: 'Cria usuário do MySQL'
+  mysql_user:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: "{{ wp_username }}"
+    password: "{{ wp_password }}"
+    priv: "{{ wp_db_name }}.*:ALL"
+    state: present
+    host: "{{ item }}"
+  with_items:
+    - 'localhost'
+    - '127.0.0.1'
+    - '192.168.100.100'
+  become: yes
+    
+- name: 'Configura o mysqld.cnf para aceitar conexão externa'     
+  replace:
+    path: '/etc/mysql/mysql.conf.d/mysqld.cnf'
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+  become: yes
+  notify:
+    - reinicia o mysql
+```
+**Explicação**  
+Esse arquivo contém o código relacionado a tarefa de instalar, criar e configurar o BD do Wordpress dentro do Mysql  
+**Arquivo main.yml da role handler do host Mysql**  
+```
+---
+- name: reinicia o mysql
+  service: 
+    name: mysql
+    state: restarted
+  become: yes
+```
+**Explicação**  
+Esse arquivo contém o código do Handler de reinicilização do Mysql.  
+
+**Templates usando roles**  
+Basta copiar o arquivo que será utilizando como template para dentro da pasta template. Obs: Continua sendo necessário que ele tenha a extensão **.j2**  
+
 Fim
